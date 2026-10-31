@@ -33,7 +33,7 @@ $lockFile = Join-Path $repoPath "$saveSlot.lock.json"
 
 # ---------- Fonctions ----------
 function Git {
-    & git @args
+    & git.exe @args
     if ($LASTEXITCODE -ne 0) { throw "git $($args -join ' ') a échoué (code $LASTEXITCODE)" }
 }
 
