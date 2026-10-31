@@ -32,7 +32,7 @@ $gameSlot = Join-Path $config["SAVE_PATH"] $saveSlot
 $lockFile = Join-Path $repoPath "$saveSlot.lock.json"
 
 # ---------- Fonctions ----------
-function Git {
+function Invoke-Git {
     & git.exe @args
     if ($LASTEXITCODE -ne 0) { throw "git $($args -join ' ') a échoué (code $LASTEXITCODE)" }
 }
@@ -47,7 +47,7 @@ function Sync-Folder($from, $to) {
 # ---------- 1. Récupération + verrou + dépôt -> jeu ----------
 try {
     Set-Location $repoPath
-    Git pull --ff-only origin main
+    Invoke-Git pull --ff-only origin main
 
     if (Test-Path $lockFile) {
         $lock = Get-Content $lockFile -Raw | ConvertFrom-Json
@@ -58,12 +58,12 @@ try {
 
     @{ owner = $player; since = (Get-Date -Format "yyyy-MM-dd HH:mm") } |
         ConvertTo-Json | Set-Content $lockFile
-    Git add $lockFile
-    Git commit -m "Lock by $player"
+    Invoke-Git add $lockFile
+    Invoke-Git commit -m "Lock by $player"
     try {
-        Git push origin main
+        Invoke-Git push origin main
     } catch {
-        Git reset --hard HEAD~1
+        Invoke-Git reset --hard HEAD~1
         throw "Impossible de poser le verrou (l'autre joueur a poussé en même temps). Relancez le jeu."
     }
 
@@ -98,19 +98,19 @@ Sync-Folder $gameSlot $repoSlot
 
 $saveChanged = [bool](git status --porcelain -- $saveSlot)
 Remove-Item $lockFile -Force
-Git add -A
+Invoke-Git add -A
 
 $date = Get-Date -Format "yyyy-MM-dd HH:mm"
 if ($saveChanged) {
-    Git commit -m "Save updated by $player on $date"
+    Invoke-Git commit -m "Save updated by $player on $date"
 } else {
-    Git commit -m "Unlock by $player (no save changes)"
+    Invoke-Git commit -m "Unlock by $player (no save changes)"
 }
 
 # ---------- 5. Push (avec un retry) ----------
 try {
-    Git push origin main
+    Invoke-Git push origin main
 } catch {
-    Git pull --rebase origin main
-    Git push origin main
+    Invoke-Git pull --rebase origin main
+    Invoke-Git push origin main
 }
