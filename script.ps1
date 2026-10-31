@@ -3,7 +3,7 @@ param([String]$game="")
 # Define variables
 $repoPath = "C:\JAVA_Projet\MoonSweeper-Sync"  # Path where the GitHub repository is cloned
 $savePath = "C:\Users\tomar\AppData\LocalLow\DragDropGames\MoonSweepers\MoonSessions" # Path to the Satisfactory save files
-$saveFile = "\slot-2"
+$saveFile = "slot-5"
 $processName = "MoonSweepers"  # Process name for Satisfactory
 
 # Pull the latest save file
@@ -21,7 +21,7 @@ while ($null -ne $gameProcess) {
 }
 
 # After game exit, push the save file back to GitHub
-Copy-Item "$savePath\$saveFile" "$repoPath\$saveFile" -Force
+Copy-Item "$savePath\$saveFile" "$repoPath\$saveFile" -Recurse -Force
 Set-Location $repoPath
 
 # Get the current date and time
