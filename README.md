@@ -19,6 +19,11 @@ This repository contains a script that automates the synchronization of Satisfac
 -   **GitHub Account**: Access to this repository
 -   **Git Authentication**: Set up SSH keys or a credential manager for HTTPS to allow Git operations without manual authentication
 
+## Pour Viito
+- Installe git avec ce lien https://git-scm.com/install/windows
+- Il faut bien l'ajouter au PATH pendant l'installation (possible de devoir redémarrer le pc après)
+- Crée un compte GitHub ou connecte toi sur le tien
+
 ## Setup
 
 1. **Clone the Repository**
