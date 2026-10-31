@@ -1,8 +1,8 @@
 param([String]$game="")
 
 # Define variables
-$repoPath = "C:\JAVA_Projet\MoonSweeper-Sync"  # Path where the GitHub repository is cloned
-$savePath = "C:\Users\tomar\AppData\LocalLow\DragDropGames\MoonSweepers\MoonSessions" # Path to the Satisfactory save files
+$repoPath = "E:\Codes\MoonSweeper-Sync"  # Path where the GitHub repository is cloned
+$savePath = "C:\Users\User\AppData\LocalLow\DragDropGames\MoonSweepers\MoonSessions" # Path to the Satisfactory save files
 $saveFile = "slot-5"
 $processName = "MoonSweepers"  # Process name for Satisfactory
 
@@ -35,4 +35,3 @@ git add $saveFile
 git commit -m "$commitMessage"
 git push origin main
 
-Read-Host "Appuyez sur Entrée pour continuer"
