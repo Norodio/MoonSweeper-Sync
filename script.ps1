@@ -1,16 +1,15 @@
 param([String]$game="")
 
 # Define variables
-$repoPath = "C:\Path\To\Your\Repo"  # Path where the GitHub repository is cloned
-$savePath = "C:\Users\<YourUsername>\AppData\Local\FactoryGame\Saved\SaveGames\<YourSteamID>" # Path to the Satisfactory save files
-$saveFile = "YourSaveFileName.sav"
-$processName = "FactoryGameSteam"  # Process name for Satisfactory
+$repoPath = "C:\JAVA_Projet\MoonSweeper-Sync"  # Path where the GitHub repository is cloned
+$savePath = "C:\Users\tomar\AppData\LocalLow\DragDropGames\MoonSweepers\MoonSessions" # Path to the Satisfactory save files
+$saveFile = "\slot-2"
+$processName = "MoonSweepers"  # Process name for Satisfactory
 
 # Pull the latest save file
 Set-Location $repoPath
 git pull origin main
-Copy-Item "$repoPath\$saveFile" "$savePath\$saveFile" -Force
-
+Copy-Item "$repoPath\$saveFile" "$savePath\$saveFile" -Recurse -Force 
 # Launch Satisfactory
 Start-Process $game # Satisfactory Steam ID
 
@@ -35,3 +34,5 @@ $commitMessage = "Updated save file on $currentDate"
 git add $saveFile
 git commit -m "$commitMessage"
 git push origin main
+
+Read-Host "Appuyez sur Entrée pour continuer"
